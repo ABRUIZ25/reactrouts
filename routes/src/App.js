@@ -1,14 +1,30 @@
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route, Link, useSearchParams } from "react-router-dom";
 import { useState } from "react";
+import { blogPosts } from "./utils/sampleBlogs";
 import './App.css';
+import BlogPost from "./component/blogPost"
+import Navbar from "./component/NavBar"
+import Blogs from "./component/blog";
+import AllBlogs from "./component/AllBlogs";
+
+// ik at some point the :blog
 
 function App() {
+  const [blogs, setBlog] = useState(blogPosts)
+  console.log(blogs)
+
+
+
   return (
     <div className="App">
       <header className="App-header">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
+          <Route path="/blogs" element={<Blogs />} >
+            <Route path="/blogs/all" element={<AllBlogs blogPosts={blogPosts} />} />
+            <Route path="single-blog/:blogId" element={<BlogPost />} />
+          </Route>
         </Routes>
 
       </header>
@@ -16,21 +32,15 @@ function App() {
   );
 }
 
-const Navbar = () => {
-  return (
-    <nav>
-      <Link to="/">Home</Link>
-      <Link to="/about">About</Link>
-    </nav>
-  )
-}
+
+
+
 
 const Home = (props) => {
   return (
     <div>
       <Navbar />
       <h1>Home Page</h1>
-
     </div>
   )
 }
